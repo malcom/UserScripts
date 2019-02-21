@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Allegro Seller Info
 // @namespace    http://malcom.pl/
-// @version      0.0.9
+// @version      0.1.0
 // @description  Show the seller's name and location on the offers lists and summary pages
 // @author       Malcom <me@malcom.pl>
 // @match        allegro.pl/*
