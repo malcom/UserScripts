@@ -11,10 +11,14 @@
 (function () {
 	'use strict';
 
+	function randomClassName() {
+		return 'asi' + (+new Date).toString(36);
+	}
+
 	// strona z lista aukcji
 	if (window.__listing_StoreState_base) {
 
-		const cssName = 'mX6tzke5';
+		const cssName = randomClassName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
 				div.${cssName} { position: absolute; top: 0; right: 0; }
@@ -79,7 +83,7 @@
 	// strona z opisem aukcji
 	if (window.__PROPS__ALLEGRO_SHOWOFFER_SUMMARY__) {
 
-		const cssName = 'm8dkm36f';
+		const cssName = randomClassName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
 				div.${cssName} {
