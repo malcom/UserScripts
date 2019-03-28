@@ -113,7 +113,7 @@
 			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna,
 			// dlatego szukam pierwszego dziecka z border i lapiemy jego poprzednika
 			node = [...node.children].filter(n => {
-				return n.computedStyleMap().get('border-top-width').value == 1;
+				return n.computedStyleMap().get('border-top-width').value != 0;
 			})[0].previousElementSibling;
 
 			// gdy wiersz jest pelny, dodajemy nowy
