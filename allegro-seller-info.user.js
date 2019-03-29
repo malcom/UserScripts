@@ -111,7 +111,7 @@
 			if (!loc) return;
 
 			// wstaw lokalizacje w naglowku z info aukcji
-			node = document.querySelector('div[itemprop="offers"]');
+			node = document.querySelector('div[itemprop="offers"]').parentElement;
 
 			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
 			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna,
