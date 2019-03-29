@@ -4,6 +4,8 @@
 // @version      0.1.1
 // @description  Show the seller's name and location on the offers lists and summary pages
 // @author       Malcom <me@malcom.pl>
+// @license      The MIT License; http://opensource.org/licenses/MIT
+// @downloadURL  https://github.com/malcom/UserScripts/raw/master/allegro-seller-info.user.js
 // @match        allegro.pl/*
 // @grant        none
 // ==/UserScript==
