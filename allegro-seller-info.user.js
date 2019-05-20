@@ -104,9 +104,9 @@
 
 			var loc;
 			for (var p of node.getElementsByTagName('p')) {
-				if (p.innerText.startsWith('Lokalizacja:')) {
+				if (p.innerText.startsWith('Wysy\u0142ka z:')) {
 					var i = p.innerText.lastIndexOf(', Polska');
-					loc = i != -1 ? p.innerText.substr(0, i) : p.innerText;
+					loc = p.innerText.substr(10, i != -1 ? i - 10 : undefined).trim();
 					break;
 				}
 			}
@@ -134,7 +134,7 @@
 			}
 
 			// a jako druga komorka leci nasza wstawka
-			node.insertAdjacentHTML('beforeend', `<div class="${cssName}">${loc}</div>`);
+			node.insertAdjacentHTML('beforeend', `<div class="${cssName}">Lokalizacja: ${loc}</div>`);
 		}
 
 		// Workaround/Hack
