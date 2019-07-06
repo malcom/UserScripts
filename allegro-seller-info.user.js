@@ -103,10 +103,10 @@
 			var node = document.getElementsByName('delivery')[0].nextElementSibling;
 
 			var loc;
-			for (var p of node.getElementsByTagName('p')) {
-				if (p.innerText.startsWith('Wysy\u0142ka z:')) {
-					var i = p.innerText.lastIndexOf(', Polska');
-					loc = p.innerText.substr(10, i != -1 ? i - 10 : undefined).trim();
+			for (var e of node.getElementsByTagName('*')) {
+				if (e.innerText.startsWith('Wysy\u0142ka z:')) {
+					var i = e.innerText.lastIndexOf(', Polska');
+					loc = e.innerText.substr(10, i != -1 ? i - 10 : undefined).trim();
 					break;
 				}
 			}
