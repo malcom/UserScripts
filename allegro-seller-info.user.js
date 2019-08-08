@@ -97,6 +97,8 @@
 			</style>
 		`);
 
+		const itemNode = document.querySelector('div[itemprop="offers"]').parentElement;
+
 		function UpdateOffer() {
 
 			// pobierz lokalizacje z Opcji dostawy
@@ -112,13 +114,10 @@
 			}
 			if (!loc) return;
 
-			// wstaw lokalizacje w naglowku z info aukcji
-			node = document.querySelector('div[itemprop="offers"]').parentElement;
-
 			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
 			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna,
 			// dlatego szukam pierwszego dziecka z border i lapiemy jego poprzednika
-			node = [...node.children].filter(n => {
+			node = [...itemNode.children].filter(n => {
 				return n.computedStyleMap().get('border-top-width').value != 0;
 			})[0].previousElementSibling;
 
@@ -137,15 +136,17 @@
 			node.insertAdjacentHTML('beforeend', `<div class="${cssName}">Lokalizacja: ${loc}</div>`);
 		}
 
-		// Workaround/Hack
-		// Background Tab Resource Load Throttling ma jakis problem na Allegro,
-		// bo pomimo dodania wstawki ona znika z DOM-a po wyjsciu zakladki z tla, wiec
-		// jesli po zmianie widocznosci strony naszej wstaki nie ma to dodajemy ponownie
+		// informacje o aukcji bywaja odswiezane/przebudowane po zaladowaniu
+		// strony przez co nasza wstawka moze zostac usunieta, wiec w razie
+		// potrzeby ponawiamy aktualizacje danych o lokalizacji w aukcji
 
-		document.addEventListener('visibilitychange', function () {
-			if (!document.hidden && document.getElementsByClassName(cssName).length == 0)
-				UpdateOffer();
+		var mutationObserver = new MutationObserver(function (mutations) {
+			mutations.forEach(function (m) {
+				if (m.removedNodes.length != 0 && itemNode.getElementsByClassName(cssName).length == 0)
+					UpdateOffer(); 
+			});
 		});
+		mutationObserver.observe(itemNode, { childList: true, subtree: true });
 
 		UpdateOffer();
 		return;
