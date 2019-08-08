@@ -71,10 +71,9 @@
 		// class: '_1e83564' -> '_1e83564 d101523' ->  '_1e83564'
 
 		var mutationObserver = new MutationObserver(function (mutations) {
-			mutations.forEach(function (m) {
-				if (m.attributeName == 'class' && m.target.className.indexOf(' ') == -1)
-					UpdateList();
-			});
+			var updEvt = mutations.findIndex(m => m.attributeName == 'class' && m.target.className.indexOf(' ') == -1) != -1;
+			if (updEvt)
+				UpdateList();
 		});
 		mutationObserver.observe(listNode, { attributes: true });
 
@@ -141,10 +140,9 @@
 		// potrzeby ponawiamy aktualizacje danych o lokalizacji w aukcji
 
 		var mutationObserver = new MutationObserver(function (mutations) {
-			mutations.forEach(function (m) {
-				if (m.removedNodes.length != 0 && itemNode.getElementsByClassName(cssName).length == 0)
-					UpdateOffer(); 
-			});
+			var delEvt = mutations.findIndex(m => m.removedNodes.length != 0) != -1;
+			if (delEvt && itemNode.getElementsByClassName(cssName).length == 0)
+				UpdateOffer();
 		});
 		mutationObserver.observe(itemNode, { childList: true, subtree: true });
 
