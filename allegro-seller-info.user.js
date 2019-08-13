@@ -53,7 +53,7 @@
 				node.insertAdjacentHTML('beforeend', `
 					<div class="${cssName}">
 						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
-						<span class="location">${item.location}</span>
+						<span class="location">${item.location.city}</span>
 					</div>
 				`);
 
