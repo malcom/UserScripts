@@ -82,7 +82,7 @@
 	}
 
 	// strona z opisem aukcji
-	if (window.__PROPS__ALLEGRO_SHOWOFFER_SUMMARY__) {
+	if (window.__PROPS__ALLEGRO_SHOWOFFER_SUMMARY__ || window.__PROPS__ALLEGRO_SHOWOFFER_DESCRIPTION__) {
 
 		const cssName = randomClassName();
 		document.body.insertAdjacentHTML('beforeend', `
