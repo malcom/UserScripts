@@ -82,21 +82,23 @@
 	}
 
 	// strona z opisem aukcji
-	if (window.__PROPS__ALLEGRO_SHOWOFFER_SUMMARY__ || window.__PROPS__ALLEGRO_SHOWOFFER_DESCRIPTION__) {
+	const offers = document.querySelector('div[itemprop="offers"]');
+	if (offers) {
 
 		const cssName = randomClassName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
 				div.${cssName} {
 					font-size: 13px;
+					float: right;
+				}
+				div.${cssName} span {
 					color: #767676;
-					margin-bottom: 8px;
-					line-height: 21px;
 				}
 			</style>
 		`);
 
-		const itemNode = document.querySelector('div[itemprop="offers"]').parentElement;
+		const itemNode = offers.parentElement;
 
 		function UpdateOffer() {
 
@@ -113,26 +115,12 @@
 			}
 			if (!loc) return;
 
-			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
-			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna,
-			// dlatego szukam pierwszego dziecka z border i lapiemy jego poprzednika
+			// wstawiamy w wiersz z wyszczegolnionymi info o dostawie
+			// dlatego szukam pierwszego dziecka z border i wrzucamy do srodka
 			node = [...itemNode.children].filter(n => {
 				return n.computedStyleMap().get('border-top-width').value != 0;
-			})[0].previousElementSibling;
-
-			// gdy wiersz jest pelny, dodajemy nowy
-			if (node.childElementCount > 1) {
-				node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
-				node = node.nextElementSibling;
-			}
-
-			// gdy wiersz pusty dodajemy pusty kontener jako pierwsza komorka
-			if (node.childElementCount == 0) {
-				node.insertAdjacentHTML('beforeend', `<div></div>`);
-			}
-
-			// a jako druga komorka leci nasza wstawka
-			node.insertAdjacentHTML('beforeend', `<div class="${cssName}">Lokalizacja: ${loc}</div>`);
+			})[0];
+			node.insertAdjacentHTML('afterbegin', `<div class="${cssName}"><span>Lokalizacja:</span> ${loc}</div>`);
 		}
 
 		// informacje o aukcji bywaja odswiezane/przebudowane po zaladowaniu
