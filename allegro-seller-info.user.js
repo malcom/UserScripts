@@ -78,7 +78,16 @@
 		});
 		mutationObserver.observe(listNode, { attributes: true });
 
-		UpdateList();
+		// zdarza sie ze czasem dane 'bazowe' nie sa jeszcze dostepne, dlatego
+		// sprawdzamy co 100ms czy 'opbox' nie dodal juz reactowych smieci
+		function UpdateListBase() {
+			if (listing._reactRootContainer)
+				UpdateList();
+			else
+				setTimeout(UpdateListBase, 100);
+		}
+
+		UpdateListBase();
 		return;
 	}
 
