@@ -100,7 +100,11 @@
 			<style type="text/css">
 				div.${cssName} {
 					font-size: 13px;
+					line-height: 16px;
 					float: right;
+					margin-top: 12px;
+					margin-bottom: 12px;
+					color: #222;
 				}
 				div.${cssName} span {
 					color: #767676;
