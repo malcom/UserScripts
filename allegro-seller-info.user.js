@@ -18,7 +18,8 @@
 	}
 
 	// strona z lista aukcji
-	if (window.__listing_StoreState_base) {
+	const listing = document.getElementById('opbox-listing--base');
+	if (listing) {
 
 		const cssName = randomClassName();
 		document.body.insertAdjacentHTML('beforeend', `
@@ -32,7 +33,7 @@
 			</style>
 		`);
 
-		const listNode = document.getElementsByClassName('opbox-listing--base')[0].firstElementChild;
+		const listNode = listing.firstElementChild;
 
 		function UpdateList() {
 
