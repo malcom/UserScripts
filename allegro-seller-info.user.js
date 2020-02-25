@@ -13,7 +13,7 @@
 (function () {
 	'use strict';
 
-	function randomClassName() {
+	function randomName() {
 		return 'asi' + (+new Date).toString(36);
 	}
 
@@ -21,15 +21,15 @@
 	const listing = document.getElementById('opbox-listing--base');
 	if (listing) {
 
-		const cssName = randomClassName();
+		const tagName = randomName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
-				div.${cssName} { position: absolute; top: 0; right: 0; }
-				div.${cssName} > span { display: block; text-align: right; }
-				div.${cssName} > span.seller a { color: #00a790; text-decoration: none; }
-				div.${cssName} > span.seller a: link { color: #00a790; }
-				div.${cssName} > span.seller a: visited { color: #006456; }
-				div.${cssName} > span.location { margin-bottom: 10px; }
+				${tagName} { position: absolute; top: 0; right: 0; }
+				${tagName} > span { display: block; text-align: right; }
+				${tagName} > span.seller a { color: #00a790; text-decoration: none; }
+				${tagName} > span.seller a: link { color: #00a790; }
+				${tagName} > span.seller a: visited { color: #006456; }
+				${tagName} > span.location { margin-bottom: 10px; }
 			</style>
 		`);
 
@@ -52,10 +52,10 @@
 				node.style.position = 'relative';
 
 				node.insertAdjacentHTML('beforeend', `
-					<div class="${cssName}">
+					<${tagName}>
 						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
 						<span class="location">${item.location.city}</span>
-					</div>
+					</${tagName}>
 				`);
 
 				// jesli jest logo sklepu to przenies je do naszego kontenera,
@@ -95,10 +95,10 @@
 	const offers = document.querySelector('div[itemprop="offers"]');
 	if (offers) {
 
-		const cssName = randomClassName();
+		const tagName = randomName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
-				div.${cssName} {
+				${tagName} {
 					font-size: 13px;
 					line-height: 16px;
 					float: right;
@@ -106,7 +106,7 @@
 					margin-bottom: 12px;
 					color: #222;
 				}
-				div.${cssName} span {
+				${tagName} span {
 					color: #767676;
 				}
 			</style>
@@ -134,7 +134,7 @@
 			node = [...itemNode.children].filter(n => {
 				return n.computedStyleMap().get('border-top-width').value != 0;
 			})[0];
-			node.insertAdjacentHTML('afterbegin', `<div class="${cssName}"><span>Lokalizacja:</span> ${loc}</div>`);
+			node.insertAdjacentHTML('afterbegin', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
 		}
 
 		// informacje o aukcji bywaja odswiezane/przebudowane po zaladowaniu
@@ -143,7 +143,7 @@
 
 		var mutationObserver = new MutationObserver(function (mutations) {
 			var delEvt = mutations.findIndex(m => m.removedNodes.length != 0) != -1;
-			if (delEvt && itemNode.getElementsByClassName(cssName).length == 0)
+			if (delEvt && itemNode.getElementsByTagName(tagName).length == 0)
 				UpdateOffer();
 		});
 		mutationObserver.observe(itemNode, { childList: true, subtree: true });
