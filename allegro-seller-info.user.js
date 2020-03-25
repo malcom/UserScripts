@@ -119,9 +119,10 @@
 
 			var loc;
 			for (var e of node.getElementsByTagName('*')) {
-				if (e.innerText.startsWith('Wysy\u0142ka z:')) {
-					var i = e.innerText.lastIndexOf(', Polska');
-					loc = e.innerText.substr(10, i != -1 ? i - 10 : undefined).trim();
+				var m = e.innerText.match("^Wysy\u0142ka z: (.*)\n");
+				if (m && m.length == 2) {
+					var i = m[1].lastIndexOf(', Polska');
+					loc = i != -1 ? m[1].substr(0, i) : m[1];
 					break;
 				}
 			}
