@@ -100,10 +100,8 @@
 			<style type="text/css">
 				${tagName} {
 					font-size: 13px;
-					line-height: 16px;
-					float: right;
-					margin-top: 12px;
-					margin-bottom: 12px;
+					line-height: 21px;
+					margin-bottom: 8px;
 					color: #222;
 				}
 				${tagName} span {
