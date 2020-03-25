@@ -129,12 +129,27 @@
 			}
 			if (!loc) return;
 
-			// wstawiamy w wiersz z wyszczegolnionymi info o dostawie
-			// dlatego szukam pierwszego dziecka z border i wrzucamy do srodka
+			// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
+			// dlatego szukamy poprzednika pierwszego dziecka z border
 			node = [...itemNode.children].filter(n => {
 				return n.computedStyleMap().get('border-top-width').value != 0;
-			})[0];
-			node.insertAdjacentHTML('afterbegin', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
+			})[0].previousElementSibling;
+
+			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
+			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
+
+			// gdy wiersz pelny, dodajemy nowy
+			if (node.childElementCount > 1) {
+				node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
+				node = node.nextElementSibling;
+			}
+
+			// gdy wiersz pusty dodajemy pusty kontener jako pierwsza komorka
+			if (node.childElementCount == 0) {
+				node.insertAdjacentHTML('beforeend', `<div></div>`);
+			}
+
+			node.insertAdjacentHTML('beforeend', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
 		}
 
 		// informacje o aukcji bywaja odswiezane/przebudowane po zaladowaniu
