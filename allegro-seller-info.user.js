@@ -30,6 +30,7 @@
 				${tagName} > span.seller a: link { color: #00a790; }
 				${tagName} > span.seller a: visited { color: #006456; }
 				${tagName} > span.location { margin-bottom: 10px; }
+				${tagName} > span.rating { font-weight: bold; }
 			</style>
 		`);
 
@@ -53,7 +54,7 @@
 
 				node.insertAdjacentHTML('beforeend', `
 					<${tagName}>
-						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
+						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span><span class="rating">${item.seller.positiveFeedbackPercent}%</span>
 						<span class="location">${item.location.city}</span>
 					</${tagName}>
 				`);
