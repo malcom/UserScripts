@@ -49,13 +49,16 @@
 				}
 				if (!item) return;
 
+				// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
+				var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
+
 				node = node.children[0].children[0].children[1].children[0];
 				node.style.position = 'relative';
 
 				node.insertAdjacentHTML('beforeend', `
 					<${tagName}>
 						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
-						<span class="rating">${item.seller.positiveFeedbackPercent}%</span>
+						<span class="rating">${rating}</span>
 						<span class="location">${item.location.city}</span>
 					</${tagName}>
 				`);
