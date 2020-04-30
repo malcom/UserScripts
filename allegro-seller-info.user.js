@@ -120,7 +120,7 @@
 		function UpdateOffer() {
 
 			// pobierz lokalizacje z Opcji dostawy
-			var node = document.getElementsByName('delivery')[0].nextElementSibling;
+			var node = document.getElementsByName('shippinginfoshow')[0].nextElementSibling;
 
 			var loc;
 			for (var e of node.getElementsByTagName('*')) {
