@@ -8,6 +8,15 @@ All scripts are set to automatically update directly from this repo, which will 
 
 Show the seller's name and location on the offers lists and summary pages in Polish online e-commerce platform - [Allegro](http://allegro.pl).
 
-![Allegro Seller Info](https://github.com/malcom/UserScripts/raw/master/allegro-seller-info.png)
+![screen](https://github.com/malcom/UserScripts/raw/master/allegro-seller-info.png)
 
 Click to [install](https://github.com/malcom/UserScripts/raw/master/allegro-seller-info.user.js) the script.
+
+
+## OLX.pl Modern UI Fix
+
+Fix some shitty things in new modern UI on Polish online marketplace platform - [OLX.pl](http://www.olx.pl).
+
+![screen](https://github.com/malcom/UserScripts/raw/master/olx-pl-modern-ui-fix.png)
+
+Click to [install](https://github.com/malcom/UserScripts/raw/master/olx-pl-modern-ui-fix.user.js) the script.
