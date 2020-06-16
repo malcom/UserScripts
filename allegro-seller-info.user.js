@@ -63,9 +63,9 @@
 					</${tagName}>
 				`);
 
-				// jesli jest logo sklepu to przenies je do naszego kontenera,
-				// zeby wyswietlalo sie pod nasza wstawka...
-				if (node.firstElementChild.nodeName != 'H2')
+				// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
+				// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
+				if (item.seller.brandzone)
 					node.lastElementChild.appendChild(node.firstElementChild);
 
 			}
