@@ -68,6 +68,11 @@
 				if (item.seller.brandzone)
 					node.lastElementChild.appendChild(node.firstElementChild);
 
+				// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
+				// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
+				if (item.vendor == 'allegro_lokalnie')
+					node.parentElement.removeChild(node.parentElement.lastChild.previousElementSibling);
+
 			}
 		}
 
