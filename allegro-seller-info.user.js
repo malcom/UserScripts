@@ -43,7 +43,7 @@
 				var item;
 				for (var i in node) {
 					if (i.startsWith('__reactEventHandlers')) {
-						item = node[i].children.props.item;
+						item = node[i].children.props.children[0].props.item;
 						break;
 					}
 				}
@@ -52,7 +52,7 @@
 				// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 				var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
 
-				node = node.children[0].children[0].children[1].children[0];
+				node = node.children[0].children[1].children[0];
 				node.style.position = 'relative';
 
 				node.insertAdjacentHTML('beforeend', `
@@ -111,7 +111,6 @@
 				${tagName} {
 					font-size: 13px;
 					line-height: 21px;
-					margin-bottom: 8px;
 					color: #222;
 				}
 				${tagName} span {
@@ -139,10 +138,8 @@
 			if (!loc) return;
 
 			// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
-			// dlatego szukamy poprzednika pierwszego dziecka z border
-			node = [...itemNode.children].filter(n => {
-				return n.computedStyleMap().get('border-top-width').value != 0;
-			})[0].previousElementSibling;
+			// dlatego szukamy poprzednika diva zawierajacego pierwsza linie
+			node = itemNode.getElementsByTagName('hr')[0].parentElement.previousElementSibling;
 
 			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
 			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
