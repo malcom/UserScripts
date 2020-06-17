@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Allegro Seller Info
 // @namespace    http://malcom.pl/
-// @version      0.1.11
+// @version      0.1.12
 // @description  Show the seller's name and location on the offers lists and summary pages
 // @author       Malcom <me@malcom.pl>
 // @license      The MIT License; http://opensource.org/licenses/MIT
