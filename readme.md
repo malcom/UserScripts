@@ -20,3 +20,12 @@ Fix some shitty things in new modern UI on Polish online marketplace platform - 
 ![screen](https://github.com/malcom/UserScripts/raw/master/olx-pl-modern-ui-fix.png)
 
 Click to [install](https://github.com/malcom/UserScripts/raw/master/olx-pl-modern-ui-fix.user.js) the script.
+
+
+## YouTube Polymer UI Fix
+
+Fix shitty Polymer UI render on [YouTube](http://www.youtube.com) Homepage.
+
+![screen](https://github.com/malcom/UserScripts/raw/master/youtube-polymer-ui-fix.png)
+
+Click to [install](https://github.com/malcom/UserScripts/raw/master/youtube-polymer-ui-fix.user.js) the script.
