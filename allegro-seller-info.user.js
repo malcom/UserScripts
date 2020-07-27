@@ -40,14 +40,16 @@
 
 			for (var node of listNode.getElementsByTagName('article')) {
 
-				var item;
-				for (var i in node) {
-					if (i.startsWith('__reactEventHandlers')) {
-						item = node[i].children.props.children[0].props.item;
-						break;
-					}
-				}
-				if (!item) return;
+				// get react component
+				var item = node[Object.keys(node).find(key => key.startsWith('__reactInternalInstance$'))];
+				if (!item || !item.return || !item.return.stateNode)
+					continue;
+				item = item.return.stateNode;
+
+				// get item props
+				if (!item || !item.props || !item.props.item)
+					continue;
+				item = item.props.item;
 
 				// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 				var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
