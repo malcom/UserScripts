@@ -130,7 +130,7 @@
 
 			var loc;
 			for (var e of node.getElementsByTagName('*')) {
-				var m = e.innerText.match("^Wysy\u0142ka z: (.*)\n");
+				var m = e.innerText.match("^Wysy\u0142ka z: (.*)$");
 				if (m && m.length == 2) {
 					var i = m[1].lastIndexOf(', Polska');
 					loc = i != -1 ? m[1].substr(0, i) : m[1];
