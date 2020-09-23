@@ -23,7 +23,11 @@
 	}
 
 	// strona z lista aukcji
-	const listing = document.getElementById('opbox-listing--base');
+	const listing = Array.prototype.filter.call(
+		document.getElementsByClassName('opbox-listing'),
+		e => e.getElementsByTagName('article').length > 0
+	).pop();
+
 	if (listing) {
 
 		const tagName = randomName();
