@@ -17,6 +17,11 @@
 		return 'asi' + (+new Date).toString(36);
 	}
 
+	function getReactInst(dom) {
+		var item = dom[Object.keys(dom).find(key => key.startsWith('__reactInternalInstance$'))];
+		return item.return || null;
+	}
+
 	// strona z lista aukcji
 	const listing = document.getElementById('opbox-listing--base');
 	if (listing) {
@@ -40,16 +45,11 @@
 
 			for (var node of listNode.getElementsByTagName('article')) {
 
-				// get react component
-				var item = node[Object.keys(node).find(key => key.startsWith('__reactInternalInstance$'))];
-				if (!item || !item.return || !item.return.stateNode)
-					continue;
-				item = item.return.stateNode;
-
 				// get item props
-				if (!item || !item.props || !item.props.item)
+				var item = getReactInst(node);
+				if (!item || !item.pendingProps || !item.pendingProps.item)
 					continue;
-				item = item.props.item;
+				item = item.pendingProps.item;
 
 				// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 				var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
@@ -126,18 +126,16 @@
 		function UpdateOffer() {
 
 			// pobierz lokalizacje z Opcji dostawy
-			var node = document.getElementsByName('shippinginfoshow')[0].nextElementSibling;
+			var node = document.getElementsByClassName('opbox-showoffer-delivery')[0].firstElementChild;
 
-			var loc;
-			for (var e of node.getElementsByTagName('*')) {
-				var m = e.innerText.match("^Wysy\u0142ka z: (.*)$");
-				if (m && m.length == 2) {
-					var i = m[1].lastIndexOf(', Polska');
-					loc = i != -1 ? m[1].substr(0, i) : m[1];
-					break;
-				}
-			}
-			if (!loc) return;
+			// get item props
+			var item = getReactInst(node);
+			if (!item || !item.pendingProps || !item.pendingProps.offerLocation)
+				return;
+			var loc = item.pendingProps.offerLocation;
+
+			if (loc.endsWith(', Polska'))
+				loc = loc.substr(0, loc.length - 8);
 
 			// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
 			// dlatego szukamy poprzednika diva zawierajacego pierwsza linie
