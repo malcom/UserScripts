@@ -22,6 +22,15 @@ Fix some shitty things in new modern UI on Polish online marketplace platform - 
 Click to [install](https://github.com/malcom/UserScripts/raw/master/olx-pl-modern-ui-fix.user.js) the script.
 
 
+## YouTube Block Popups (SignIn/GDPR)
+
+Dismiss annoying SignIn/GDPR popups and prevent from pausing the videos on [YouTube](http://www.youtube.com).
+
+![screen](https://github.com/malcom/UserScripts/raw/master/youtube-block-popups.png)
+
+Click to [install](https://github.com/malcom/UserScripts/raw/master/youtube-block-popups.user.js) the script.
+
+
 ## YouTube Polymer UI Fix
 
 Fix shitty Polymer UI render on [YouTube](http://www.youtube.com) Homepage.
