@@ -19,7 +19,7 @@
 
 	function getReactInst(dom) {
 		var item = dom[Object.keys(dom).find(key => key.startsWith('__reactInternalInstance$'))];
-		return item.return || null;
+		return item && item.return ? item.return : null;
 	}
 
 	// strona z lista aukcji
@@ -45,65 +45,60 @@
 
 		const listNode = listing.firstElementChild;
 
-		function UpdateList() {
+		function UpdateOffer(node) {
 
-			for (var node of listNode.getElementsByTagName('article')) {
+			// updated?
+			if (node.getElementsByTagName(tagName).length != 0)
+				return;
 
-				// get item props
-				var item = getReactInst(node);
-				if (!item || !item.pendingProps || !item.pendingProps.item)
-					continue;
-				item = item.pendingProps.item;
+			// get item props
+			var item = getReactInst(node);
+			if (!item || !item.pendingProps || !item.pendingProps.item)
+				return;
+			item = item.pendingProps.item;
 
-				// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
-				var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
+			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
+			var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
 
-				node = node.children[0].children[1].children[0];
-				node.style.position = 'relative';
+			node = node.children[0].children[1].children[0];
+			node.style.position = 'relative';
 
-				node.insertAdjacentHTML('beforeend', `
-					<${tagName}>
-						<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
-						<span class="rating">${rating}</span>
-						<span class="location">${item.location.city}</span>
-					</${tagName}>
-				`);
+			node.insertAdjacentHTML('beforeend', `
+				<${tagName}>
+					<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
+					<span class="rating">${rating}</span>
+					<span class="location">${item.location.city}</span>
+				</${tagName}>
+			`);
 
-				// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
-				// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
-				if (item.seller.brandzone)
-					node.lastElementChild.appendChild(node.firstElementChild);
+			// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
+			// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
+			if (item.seller.brandzone)
+				node.lastElementChild.appendChild(node.firstElementChild);
 
-				// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
-				// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
-				if (item.vendor == 'allegro_lokalnie')
-					node.parentElement.removeChild(node.parentElement.lastChild.previousElementSibling);
+			// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
+			// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
+			if (item.vendor == 'allegro_lokalnie')
+				node.parentElement.removeChild(node.parentElement.lastChild.previousElementSibling);
 
-			}
 		}
 
-		// na czas aktualizacji/odswiezania listy, element 'listNode'
-		// posiada dodatkowa klase stylow, wiec jej usuniecie jest
-		// rownoznaczne z zakonczeniem operacji przebudowania listy
-		// class: '_1e83564' -> '_1e83564 d101523' ->  '_1e83564'
-
+		// obserwuj zmiany na liscie ofert i uaktualniaj dodawane nowe elementy
 		var mutationObserver = new MutationObserver(function (mutations) {
-			var updEvt = mutations.findIndex(m => m.attributeName == 'class' && m.target.className.indexOf(' ') == -1) != -1;
-			if (updEvt)
-				UpdateList();
+			for (var mutation of mutations) {
+				for (var node of mutation.addedNodes) {
+					if (node.nodeName == 'ARTICLE')
+						UpdateOffer(node);
+				}
+			}
 		});
-		mutationObserver.observe(listNode, { attributes: true });
+		mutationObserver.observe(listNode, { childList: true, subtree: true });
 
-		// zdarza sie ze czasem dane 'bazowe' nie sa jeszcze dostepne, dlatego
-		// sprawdzamy co 100ms czy 'opbox' nie dodal juz reactowych smieci
-		function UpdateListBase() {
-			if (listing._reactRootContainer)
-				UpdateList();
-			else
-				setTimeout(UpdateListBase, 100);
-		}
+		// zaktualizuj obecne oferty na liscie, na wypadek gdyby powyzszy
+		// MutationObserver zostal uruchomiony juz po zmianach...
+		for (var node of listNode.getElementsByTagName('article'))
+			UpdateOffer(node);
 
-		UpdateListBase();
 		return;
 	}
 
