@@ -100,9 +100,19 @@
 
 		// zaktualizuj obecne oferty na liscie, na wypadek gdyby powyzszy
 		// MutationObserver zostal uruchomiony juz po zmianach...
-		for (var node of listNode.getElementsByTagName('article'))
-			UpdateOffer(node);
 
+		// zdarza sie ze czasem dane 'bazowe' nie sa jeszcze dostepne, dlatego
+		// sprawdzamy co 100ms czy 'opbox' nie dodal juz reactowych smieci
+		function UpdateListBase() {
+			if (listing._reactRootContainer) {
+				for (var node of listNode.getElementsByTagName('article'))
+					UpdateOffer(node);
+				return;
+			}
+			setTimeout(UpdateListBase, 100);
+		}
+
+		UpdateListBase();
 		return;
 	}
 
