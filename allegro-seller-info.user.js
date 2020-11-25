@@ -81,13 +81,19 @@
 
 		}
 
-		// obserwuj zmiany na liscie ofert i uaktualniaj dodawane nowe elementy
+		// obserwuj zmiany na liscie ofert i uaktualniaj dodawane i modyfikowane elementy
 		var mutationObserver = new MutationObserver(function (mutations) {
 			for (var mutation of mutations) {
+
 				for (var node of mutation.addedNodes) {
 					if (node.nodeName == 'ARTICLE')
 						UpdateOffer(node);
 				}
+
+				var node = mutation.target;
+				if (node.nodeName == 'ARTICLE')
+					UpdateOffer(node);
+
 			}
 		});
 		mutationObserver.observe(listNode, { childList: true, subtree: true });
