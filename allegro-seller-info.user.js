@@ -18,8 +18,7 @@
 	}
 
 	function getReactInst(dom) {
-		var item = dom[Object.keys(dom).find(key => key.startsWith('__reactInternalInstance$'))];
-		return item && item.return ? item.return : null;
+		return dom[Object.keys(dom).find(key => key.startsWith('__reactInternalInstance$'))]?.return;
 	}
 
 	// strona z lista aukcji
@@ -52,10 +51,9 @@
 				return;
 
 			// get item props
-			var item = getReactInst(node);
-			if (!item || !item.pendingProps || !item.pendingProps.item)
+			var item = getReactInst(node)?.return?.pendingProps?.item;
+			if (!item)
 				return;
-			item = item.pendingProps.item;
 
 			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 			var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
