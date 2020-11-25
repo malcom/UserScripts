@@ -58,7 +58,11 @@
 			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 			var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
 
-			node = node.children[0].children[1].children[0];
+			// jesli element nie jest w pelni zbudowany to ignoruj
+			node = node.children[0]?.children[1]?.children[0];
+			if (!node)
+				return;
+
 			node.style.position = 'relative';
 
 			node.insertAdjacentHTML('beforeend', `
