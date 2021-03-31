@@ -36,8 +36,6 @@
 			font-family: iconfont;
 			font-size: 18px;
 		}
-		.prev .pageNextPrev .omuif-link::before { content: "\\E04E"; }
-		.next .pageNextPrev .omuif-link::after { content: "\\E062"; }
 		/* wylaczenie hovera, jesli nie ma poprzedniej/nastepnej strony */
 		span.pageNextPrev:hover > * {
 			color: initial;
@@ -56,10 +54,21 @@
 	`;
 	document.head.appendChild(style);
 
+	let cssLinkFixed = false;
+
 	function FixNextPrevLinks() {
 		const links = document.getElementsByClassName('pageNextPrev');
 		if (links.length != 2)
 			return;
+
+		if (!cssLinkFixed) {
+			style.textContent += `
+				.prev .pageNextPrev .omuif-link::before { content: ${getComputedStyle(links[0], ':before').getPropertyValue('content')} }
+				.next .pageNextPrev .omuif-link::after { content: ${getComputedStyle(links[1], ':before').getPropertyValue('content')}; }
+		`;
+			cssLinkFixed = true;
+		}
+
 		links[0].insertAdjacentHTML('beforeend', `<span class="omuif-link">poprzednia</span>`);
 		links[1].insertAdjacentHTML('beforeend', `<span class="omuif-link">następna</span>`);
 	}
