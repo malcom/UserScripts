@@ -16,19 +16,22 @@
 
 	const style = document.createElement('style');
 	style.textContent = `
-		.rich-grid-video-skeleton {
+		#home-container-media {
+			padding-right: 40px !important;
+		}
+		.rich-grid-media-skeleton {
 			flex-basis: 210px !important;
 			min-width: 210px !important;
 			max-width: 210px !important;
-			margin: 0 4px 0 0 !important;
+			margin: 0 2px 0 2px !important;
 		}
-		.rich-grid-video-skeleton .channel-avatar {
+		.rich-grid-media-skeleton .channel-avatar {
 			display: none;
 		}
-		.rich-grid-video-skeleton .rich-video-title {
+		.rich-grid-media-skeleton .rich-video-title {
 			width: 100% !important;
 		}
-		.rich-grid-video-skeleton .rich-video-meta {
+		.rich-grid-media-skeleton .rich-video-meta {
 			width: 70% !important;
 		}
 		ytd-rich-grid-renderer {
