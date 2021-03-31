@@ -55,8 +55,11 @@
 			if (!item)
 				return;
 
+			// aukcje z allegro.lokalnie nie maja nazwy/url sprzedajacego tylko id
+			var seller = item.seller.login ? `<a href="${item.seller.userListingUrl}">${item.seller.login}</a>` : item.seller.id;
+
 			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
-			var rating = item.seller.positiveFeedbackPercent != undefined ? item.seller.positiveFeedbackPercent + '%' : '---';
+			var rating = item.seller.positiveFeedbackPercent ? item.seller.positiveFeedbackPercent + '%' : '---';
 
 			// jesli element nie jest w pelni zbudowany to ignoruj
 			node = node.children[0]?.children[1]?.children[0];
@@ -67,7 +70,7 @@
 
 			node.insertAdjacentHTML('beforeend', `
 				<${tagName}>
-					<span class="seller"><a href="${item.seller.userListingUrl}">${item.seller.login}</a></span>
+					<span class="seller">${seller}</span>
 					<span class="rating">${rating}</span>
 					<span class="location">${item.location.city}</span>
 				</${tagName}>
