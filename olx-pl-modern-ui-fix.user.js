@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         OLX.pl Modern UI Fix
 // @namespace    http://malcom.pl/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Make OLX.pl UI more readable ;)
 // @author       Malcom <me@malcom.pl>
 // @license      The MIT License; http://opensource.org/licenses/MIT
