@@ -14,6 +14,13 @@
 (function () {
 	'use strict';
 
+	function OnHeadReady(handler) {
+		if (document.head) { handler(); return; }
+		(new MutationObserver((mutations, observer) => {
+			if (document.head) { handler(); observer.disconnect(); }
+		})).observe(document, {childList: true, subtree: true});
+	}
+
 	const style = document.createElement('style');
 	style.textContent = `
 		#home-container-media {
@@ -62,6 +69,8 @@
 			line-height: var(--ytd-thumbnail-attribution_-_line-height) !important;
 		}
 	`;
-	document.head.appendChild(style);
+	OnHeadReady(() => {
+		document.head.appendChild(style);
+	});
 
 })();
