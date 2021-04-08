@@ -14,6 +14,13 @@
 (function () {
 	'use strict';
 
+	function OnHeadReady(handler) {
+		if (document.head) { handler(); return; }
+		(new MutationObserver((mutations, observer) => {
+			if (document.head) { handler(); observer.disconnect(); }
+		})).observe(document, {childList: true, subtree: true});
+	}
+
 	const style = document.createElement('style');
 	style.textContent = `
 		body {
@@ -52,7 +59,9 @@
 			font-size: 15px !important;
 		}
 	`;
-	document.head.appendChild(style);
+	OnHeadReady(() => {
+		document.head.appendChild(style);
+	});
 
 	let cssLinkFixed = false;
 
