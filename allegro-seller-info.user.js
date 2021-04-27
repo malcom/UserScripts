@@ -145,14 +145,16 @@
 
 		function UpdateOffer() {
 
-			// pobierz lokalizacje z Opcji dostawy
-			var node = document.getElementsByClassName('opbox-showoffer-delivery')[0].firstElementChild;
+			// pobierz lokalizacje z serializowanych danych "Dostawa i platnosc"
+			var node = document.getElementsByName('shippinginfoshow')[0].parentElement;
 
 			// get item props
-			var item = getReactInst(node);
-			if (!item || !item.pendingProps || !item.pendingProps.offerLocation)
+			var id = node.getAttribute("data-box-id");
+			node = document.querySelector(`script[data-serialize-box-id="${id}"]`);
+			var item = JSON.parse(node.textContent);
+			if (!item || !item.offerLocation)
 				return;
-			var loc = item.pendingProps.offerLocation;
+			var loc = item.offerLocation;
 
 			if (loc.endsWith(', Polska'))
 				loc = loc.substr(0, loc.length - 8);
