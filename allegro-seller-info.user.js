@@ -61,6 +61,9 @@
 			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 			var rating = item.seller.positiveFeedbackPercent ? item.seller.positiveFeedbackPercent + '%' : '---';
 
+			// ostatnio city znikne³o, ale w popover jest sformatowany ciag w stylu "<dostawa z>: <city>"
+			var location = item.location.city ? item.location.city : item.location.popover.text.match(/.*:\s*(.*)/)[1];
+
 			// jesli element nie jest w pelni zbudowany to ignoruj
 			node = node.children[0]?.children[1]?.children[0];
 			if (!node)
@@ -72,7 +75,7 @@
 				<${tagName}>
 					<span class="seller">${seller}</span>
 					<span class="rating">${rating}</span>
-					<span class="location">${item.location.city}</span>
+					<span class="location">${location}</span>
 				</${tagName}>
 			`);
 
