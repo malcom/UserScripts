@@ -21,6 +21,18 @@
 		return dom[Object.keys(dom).find(key => key.startsWith('__reactInternalInstance$'))]?.return;
 	}
 
+	function getPageSubtreeData(id, callback) {
+		var req = new XMLHttpRequest();
+		req.open('GET', location.pathname, true);
+		req.setRequestHeader("Accept" , "application/vnd.opbox-web.subtree+json");
+		req.setRequestHeader("x-box-id", id);
+		req.onreadystatechange = function (evt) {
+			if (req.readyState == 4 && req.status == 200)
+				callback(id, JSON.parse(req.response));
+		};
+		req.send(null);
+	}
+
 	// strona z lista aukcji
 	const listing = Array.prototype.filter.call(
 		document.getElementsByClassName('opbox-listing'),
@@ -145,42 +157,43 @@
 		`);
 
 		const itemNode = offers.parentElement;
+		var processing = 0;
 
 		function UpdateOffer() {
 
-			// pobierz lokalizacje z serializowanych danych "Dostawa i platnosc"
-			var node = document.getElementsByName('shippinginfoshow')[0].parentElement;
+			processing = 1;
+			var node = document.getElementsByName('shippinginfoshowspinner')[0].parentElement;
+			var id = node.getAttribute("data-placeholder-for");
 
-			// get item props
-			var id = node.getAttribute("data-box-id");
-			node = document.querySelector(`script[data-serialize-box-id="${id}"]`);
-			var item = JSON.parse(node.textContent);
-			if (!item || !item.offerLocation)
-				return;
-			var loc = item.offerLocation;
+			getPageSubtreeData(id, (id, data) => {
 
-			if (loc.endsWith(', Polska'))
-				loc = loc.substr(0, loc.length - 8);
+				var item = data.assets.scripts.find(m => m.code.search("offerLocation") != -1);
+				item = JSON.parse(item.code);
+				var loc = item.offerLocation;
+				if (loc.endsWith(', Polska'))
+					loc = loc.substr(0, loc.length - 8);
 
-			// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
-			// dlatego szukamy poprzednika diva zawierajacego druga linie
-			node = itemNode.getElementsByTagName('hr')[1].parentElement.previousElementSibling;
+				// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
+				// dlatego szukamy poprzednika diva zawierajacego druga linie
+				var node = itemNode.getElementsByTagName('hr')[1].parentElement.previousElementSibling;
 
-			// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
-			// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
+				// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
+				// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
 
-			// gdy wiersz pelny, dodajemy nowy
-			if (node.childElementCount > 1) {
-				node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
-				node = node.nextElementSibling;
-			}
+				// gdy wiersz pelny, dodajemy nowy
+				if (node.childElementCount > 1) {
+					node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
+					node = node.nextElementSibling;
+				}
 
-			// gdy wiersz pusty dodajemy pusty kontener jako pierwsza komorka
-			if (node.childElementCount == 0) {
-				node.insertAdjacentHTML('beforeend', `<div></div>`);
-			}
+				// gdy wiersz pusty dodajemy pusty kontener jako pierwsza komorka
+				if (node.childElementCount == 0) {
+					node.insertAdjacentHTML('beforeend', `<div></div>`);
+				}
 
-			node.insertAdjacentHTML('beforeend', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
+				node.insertAdjacentHTML('beforeend', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
+				processing = 0;
+			});
 		}
 
 		// informacje o aukcji bywaja odswiezane/przebudowane po zaladowaniu
@@ -189,7 +202,7 @@
 
 		var mutationObserver = new MutationObserver(function (mutations) {
 			var delEvt = mutations.findIndex(m => m.removedNodes.length != 0) != -1;
-			if (delEvt && itemNode.getElementsByTagName(tagName).length == 0)
+			if (delEvt && itemNode.getElementsByTagName(tagName).length == 0 && processing == 0)
 				UpdateOffer();
 		});
 		mutationObserver.observe(itemNode, { childList: true, subtree: true });
