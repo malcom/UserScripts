@@ -175,13 +175,13 @@
 
 				// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
 				// dlatego szukamy poprzednika diva zawierajacego druga linie
-				var node = itemNode.getElementsByTagName('hr')[1].parentElement.previousElementSibling;
+				var node = itemNode.getElementsByTagName('hr')[0].parentElement.previousElementSibling;
 
 				// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
 				// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
 
 				// gdy wiersz pelny, dodajemy nowy
-				if (node.childElementCount > 1) {
+				if (node.lastElementChild.childElementCount > 1) {
 					node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
 					node = node.nextElementSibling;
 				}
