@@ -56,9 +56,9 @@
 			line-height: var(--ytd-subheadline-link_-_line-height) !important;
 		}
 		ytd-rich-item-renderer #video-title {
-			font-size: var(--ytd-grid-video-title_-_font-size) !important;
-			font-weight: var(--ytd-grid-video-title_-_font-weight) !important;
-			line-height: var(--ytd-grid-video-title_-_line-height) !important;
+			font-size: var(--ytd-link_-_font-size) !important;
+			font-weight: var(--ytd-link_-_font-weight) !important;
+			line-height: var(--ytd-link_-_line-height) !important;
 		}
 		ytd-rich-item-renderer #avatar-link {
 			display: none;
