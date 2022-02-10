@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Polymer UI Fix
 // @namespace    http://malcom.pl/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Fix shitty Polymer UI render on YouTube Homepage
 // @author       Malcom <me@malcom.pl>
 // @license      The MIT License; http://opensource.org/licenses/MIT
