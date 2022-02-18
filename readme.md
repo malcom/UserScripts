@@ -13,6 +13,15 @@ Show the seller's name and location on the offers lists and summary pages in Pol
 Click to [install](https://github.com/malcom/UserScripts/raw/master/allegro-seller-info.user.js) the script.
 
 
+## OLX.pl Direct Full Photos
+
+Directly open raw full resolution photos in a new tab instead of zooming/using a swiper gallery on [OLX.pl](http://www.olx.pl).
+
+[no screen]
+
+Click to [install](https://github.com/malcom/UserScripts/raw/master/olx-pl-direct-full-photos.user.js) the script.
+
+
 ## OLX.pl Modern UI Fix
 
 Fix some shitty things in new modern UI on Polish online marketplace platform - [OLX.pl](http://www.olx.pl).
