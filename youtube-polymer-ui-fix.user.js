@@ -49,9 +49,9 @@
 			line-height: var(--ytd-subheadline-link_-_line-height) !important;
 		}
 		ytd-rich-item-renderer #video-title {
-			font-size: var(--ytd-link_-_font-size) !important;
-			font-weight: var(--ytd-link_-_font-weight) !important;
-			line-height: var(--ytd-link_-_line-height) !important;
+			font-size: var(--ytd-link-font-size) !important;
+			font-weight: var(--ytd-link-font-weight) !important;
+			line-height: var(--ytd-link-line-height) !important;
 		}
 		ytd-rich-item-renderer #avatar-link {
 			display: none;
