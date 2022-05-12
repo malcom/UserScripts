@@ -57,9 +57,9 @@
 			display: none;
 		}
 		ytd-rich-item-renderer .ytd-video-meta-block {
-			font-size: var(--ytd-thumbnail-attribution_-_font-size) !important;
-			font-weight: var(--ytd-thumbnail-attribution_-_font-weight) !important;
-			line-height: var(--ytd-thumbnail-attribution_-_line-height) !important;
+			font-size: var(--ytd-mini-attribution-font-size) !important;
+			font-weight: var(--ytd-mini-attribution-font-weight) !important;
+			line-height: var(--ytd-mini-attribution-line-height) !important;
 		}
 	`;
 
