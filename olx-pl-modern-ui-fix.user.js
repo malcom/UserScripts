@@ -26,37 +26,17 @@
 		body {
 			zoom: 0.8 !important;
 		}
-		.pageNextPrev::before,
-		.pageNextPrev::after {
-				display: none;
+		div[data-cy="l-card"] > a > div > div > div > div {
+			display: block !important;
 		}
-		.omuif-link {
-			display: inline-flex !important;
-			letter-spacing: 2px;
-			text-transform: uppercase;
-			border-radius: 5px;
-			padding: 5px;
-			margin: 0 -5px;
-		}
-		.prev .pageNextPrev .omuif-link::before,
-		.next .pageNextPrev .omuif-link::after {
-			font-family: iconfont;
-			font-size: 18px;
-		}
-		/* wylaczenie hovera, jesli nie ma poprzedniej/nastepnej strony */
-		span.pageNextPrev:hover > * {
-			color: initial;
-			background-color: initial;
-		}
-		table.offers h3 {
-			font-size: 22px !important;
-		}
-		table.offers .price {
-			text-align: initial !important;
-			font-size: 30px !important;
-		}
-		table.offers span {
-			font-size: 15px !important;
+		p[data-testid="ad-price"] {
+			font-size: 20px;
+			padding: 0;
+			text-align: left !important;
+			-webkit-box-pack: initial !important;
+			-webkit-justify-content: initial !important;
+			-ms-flex-pack: initial !important;
+			justify-content: initial !important;
 		}
 	`;
 	OnHeadReady(() => {
