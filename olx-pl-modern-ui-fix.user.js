@@ -38,29 +38,43 @@
 			-ms-flex-pack: initial !important;
 			justify-content: initial !important;
 		}
+		a[data-testid="pagination-back"]:after {
+		content: "poprzednia";
+			display: inline-block;
+			vertical-align: middle;
+			height: 24px;
+			padding-right: 10px;
+		}
+		a[data-testid="pagination-forward"]:before {
+			content: "następna";
+			display: inline-block;
+			vertical-align: middle;
+			height: 24px;
+			padding-left: 10px;
+		}
+		a[data-testid="pagination-back"],
+		a[data-testid="pagination-forward"] {
+			text-decoration: none;
+			color: #002F34;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			border-radius: 5px;
+			padding: 5px 0;
+			margin: 0 5px;
+		}
+		a[data-testid="pagination-back"] > svg,
+		a[data-testid="pagination-forward"] > svg {
+			color: inherit !important;
+		}
+		a[data-testid="pagination-back"]:hover,
+		a[data-testid="pagination-forward"]:hover {
+			color: #fff;
+			background-color: #002F34;
+		}
 	`;
 	OnHeadReady(() => {
 		document.head.appendChild(style);
 	});
-
-	let cssLinkFixed = false;
-
-	function FixNextPrevLinks() {
-		const links = document.getElementsByClassName('pageNextPrev');
-		if (links.length != 2)
-			return;
-
-		if (!cssLinkFixed) {
-			style.textContent += `
-				.prev .pageNextPrev .omuif-link::before { content: ${getComputedStyle(links[0], ':before').getPropertyValue('content')} }
-				.next .pageNextPrev .omuif-link::after { content: ${getComputedStyle(links[1], ':before').getPropertyValue('content')}; }
-		`;
-			cssLinkFixed = true;
-		}
-
-		links[0].insertAdjacentHTML('beforeend', `<span class="omuif-link">poprzednia</span>`);
-		links[1].insertAdjacentHTML('beforeend', `<span class="omuif-link">następna</span>`);
-	}
 
 	function FixListing() {
 
@@ -80,7 +94,6 @@
 
 	function FixUI() {
 		FixListing();
-		FixNextPrevLinks();
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {
