@@ -77,13 +77,13 @@
 			var location = item.location.city ? item.location.city : item.location.popover.text.match(/.*:\s*(.*)/)[1];
 
 			// jesli element nie jest w pelni zbudowany to ignoruj
-			node = node.children[0]?.children[1]?.children[0];
+			node = node.children[0]?.children[0]?.children[1]?.children[0];
 			if (!node)
 				return;
 
 			node.style.position = 'relative';
 
-			node.insertAdjacentHTML('beforeend', `
+			node.insertAdjacentHTML('afterbegin', `
 				<${tagName}>
 					<span class="seller">${seller}</span>
 					<span class="rating">${rating}</span>
@@ -94,7 +94,7 @@
 			// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
 			// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
 			if (item.seller.brandzone)
-				node.lastElementChild.appendChild(node.firstElementChild);
+				node.firstElementChild.appendChild(node.children[1]);
 
 			// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
 			// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
