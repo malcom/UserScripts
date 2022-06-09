@@ -78,35 +78,45 @@
 
 	function FixListing() {
 
-		for (const node of document.getElementsByClassName("photo-cell")) {
+		if (document.visibilityState !== 'visible')
+			return;
 
-			// td: photo-cell title-cell td-price
-			var title = node.nextElementSibling;
-			var price = title.nextElementSibling;
+		let preload = false;
 
-			// move price div into title div
-			var div = title.firstElementChild.appendChild(price.firstElementChild);
-			div.removeAttribute('class');
-			// minimalize td width
-			price.setAttribute('width', 30);
+		for (let e of document.querySelectorAll('[data-testid="listing-grid"]')) {
+			if (!e.omuif) {
+				preload = true;
+				e.omuif = 1;
+			}
 		}
-	}
 
-	function FixUI() {
-		FixListing();
+		if (!preload)
+			return;
+
+		// force preload images ;)
+		let node = document.getElementsByClassName('listing-grid-container')[0];
+
+		let sx = window.scrollX;
+		let sy = window.scrollY;
+		let style = node.style;
+
+		window.scroll(0, 0);
+		node.style.zoom = '0.1%';
+		node.style.position = 'absolute';
+		node.style.top = 0;
+
+		setTimeout(() => {
+			node.style = style;
+			window.scroll(sx, sy);
+		}, 500);
+
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {
-
-		// the #listContainer has class 'loaderActive' on loading new data
-		var mutationObserver = new MutationObserver(function (mutations) {
-			var updEvt = mutations.findIndex(m => m.attributeName == 'class' && m.target.className == '') != -1;
-			if (updEvt)
-				FixUI();
-		});
-		mutationObserver.observe(document.getElementById('listContainer'), { attributes: true });
-
-		FixUI();
+		let mutationObserver = new MutationObserver(FixListing);
+		mutationObserver.observe(document.body, { childList: true, subtree: true });
+		document.addEventListener("visibilitychange", FixListing);
+		FixListing();
 	});
 
 })();
