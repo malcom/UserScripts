@@ -77,7 +77,7 @@
 			var location = item.location.city ? item.location.city : item.location.popover.text.match(/.*:\s*(.*)/)[1];
 
 			// jesli element nie jest w pelni zbudowany to ignoruj
-			node = node.children[0]?.children[1]?.children[0];
+			node = node.children[0]?.children[0]?.children[1]?.children[0];
 			if (!node)
 				return;
 
