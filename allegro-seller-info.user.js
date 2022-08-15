@@ -175,7 +175,9 @@
 
 				// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
 				// dlatego szukamy poprzednika diva zawierajacego druga linie
-				var node = itemNode.getElementsByTagName('hr')[1].parentElement.previousElementSibling;
+				var hrs = itemNode.getElementsByTagName('hr');
+				var node = hrs.length == 1 ? hrs[0] : hrs[1].parentElement
+				node = node.previousElementSibling;
 
 				// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
 				// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
