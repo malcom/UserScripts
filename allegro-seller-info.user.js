@@ -73,8 +73,13 @@
 			// jesli uzytkownik ma za malo ocen to rating nie jest dostepny
 			var rating = item.seller.positiveFeedbackPercent ? item.seller.positiveFeedbackPercent + '%' : '---';
 
-			// ostatnio city znikne³o, ale w popover jest sformatowany ciag w stylu "<dostawa z>: <city>"
-			var location = item.location.city ? item.location.city : item.location.popover.text.match(/.*:\s*(.*)/)[1];
+			// zdarzalo sie, ze city znikalo, ale w popover pozostawal sformatowany ciag w stylu "<dostawa z>: <city>"
+			// wystepuja tez sytuacje ze w ofertach z allegro_loklanie w ogole nie ma location
+			var location = 
+				item.location?.city ||
+				item.location?.popover?.text.match(/.*:\s*(.*)/)[1] ||
+				''
+			;
 
 			// jesli element nie jest w pelni zbudowany to ignoruj
 			node = node.children[0]?.children[0]?.children[1]?.children[0];
