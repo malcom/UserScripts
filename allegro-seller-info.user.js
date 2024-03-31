@@ -54,7 +54,7 @@
 			</style>
 		`);
 
-		const listNode = listing.firstElementChild;
+		const listNode = listing;
 
 		function UpdateOffer(node) {
 
@@ -95,11 +95,6 @@
 					<span class="location">${location}</span>
 				</${tagName}>
 			`);
-
-			// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
-			// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
-			if (item.seller.brandzone)
-				node.firstElementChild.appendChild(node.children[1]);
 
 			// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
 			// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
