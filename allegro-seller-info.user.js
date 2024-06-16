@@ -92,10 +92,15 @@
 				</${tagName}>
 			`);
 
+			// jesli sprzedawca 'brand'-owy to pierwsze dziecko zawiera logo i/lub nazwe sklepu
+			// przenosimy do naszego kontenera, zeby wyswietlalo sie pod nasza wstawka...
+		//	if (item.seller.brandzone)
+		//		node.firstElementChild.appendChild(node.children[1]);
+
 			// dla ofert z allegro.lokalnie wyswietlana jest lokalizacja
 			// ktora usuwamy, bo nasza przeciez lepsza i bardziej spojna ;)
-			if (item.vendor == 'allegro_lokalnie')
-				node.parentElement.removeChild(node.parentElement.lastChild.previousElementSibling);
+		//	if (item.vendor == 'allegro_lokalnie')
+		//		node.parentElement.removeChild(node.parentElement.lastChild.previousElementSibling);
 
 		}
 
