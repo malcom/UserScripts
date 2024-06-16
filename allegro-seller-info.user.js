@@ -144,18 +144,6 @@
 	if (offers) {
 
 		const tagName = randomName();
-		document.body.insertAdjacentHTML('beforeend', `
-			<style type="text/css">
-				${tagName} {
-					font-size: 13px;
-					line-height: 21px;
-					color: #222;
-				}
-				${tagName} span {
-					color: #767676;
-				}
-			</style>
-		`);
 
 		const itemNode = offers.parentElement;
 		var processing = 0;
@@ -174,27 +162,19 @@
 				if (loc.endsWith(', Polska'))
 					loc = loc.substr(0, loc.length - 8);
 
-				// wstawiamy nad wierszem z wyszczegolnionymi info o dostawie
-				// dlatego szukamy poprzednika diva zawierajacego druga linie
-				var hrs = itemNode.getElementsByTagName('hr');
-				var node = hrs.length == 1 ? hrs[0] : hrs[1].parentElement
-				node = node.previousElementSibling;
+				// wstawiamy nad tytulem aukcji w sasiedztwie atrybutu 'Stan"
+				var node = offers.nextElementSibling.firstElementChild;
 
-				// zaleznie od aukcji i jej stanu/konfiguracji, rozne komorki w layoucie
-				// sa wypenione roznymi danymi, a ilosc wierszy i dzieci moze byc rozna
+				// lapiemy style z atrybutu 'Stan'
+				var pcls = node.querySelector('p').className;
+				var scls = node.querySelector('span').className;
 
-				// gdy wiersz pelny, dodajemy nowy
-				if (node.lastElementChild.childElementCount > 1) {
-					node.insertAdjacentHTML('afterend', `<div class="${node.className}"></div>`);
-					node = node.nextElementSibling;
-				}
-
-				// gdy wiersz pusty dodajemy pusty kontener jako pierwsza komorka
-				if (node.childElementCount == 0) {
-					node.insertAdjacentHTML('beforeend', `<div></div>`);
-				}
-
-				node.insertAdjacentHTML('beforeend', `<${tagName}><span>Lokalizacja:</span> ${loc}</${tagName}>`);
+				node.style.justifyContent = 'space-between';
+				node.insertAdjacentHTML('beforeend', `
+					<${tagName}><p class="${pcls}">
+						Lokalizacja: <span class="${scls}">${loc}</span>
+					</p></${tagName}>
+				`);
 				processing = 0;
 			});
 		}
