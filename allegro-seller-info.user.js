@@ -44,13 +44,11 @@
 		const tagName = randomName();
 		document.body.insertAdjacentHTML('beforeend', `
 			<style type="text/css">
-				${tagName} { position: absolute; top: 0; right: 0; }
 				${tagName} > span { display: block; text-align: right; }
 				${tagName} > span.seller a { color: #00a790; text-decoration: none; }
 				${tagName} > span.seller a: link { color: #00a790; }
 				${tagName} > span.seller a: visited { color: #006456; }
 				${tagName} > span.rating { font-weight: bold; }
-				${tagName} > span.location { margin-bottom: 10px; }
 			</style>
 		`);
 
@@ -85,8 +83,6 @@
 			node = node.children[0]?.children[1]?.children[0]?.children[0];
 			if (!node)
 				return;
-
-			node.style.position = 'relative';
 
 			node.insertAdjacentHTML('afterbegin', `
 				<${tagName}>
